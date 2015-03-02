@@ -121,6 +121,22 @@ fatJetType = NTupleObjectType("fatJet",  baseObjectTypes = [ jetType ], variable
     NTupleVariable("minMass", lambda x : (x.tagInfo("caTop").properties().minMass if x.tagInfo("caTop") else -99), float, help="CA8 jet minMass"),
     NTupleVariable("nSubJets", lambda x : (x.tagInfo("caTop").properties().nSubJets if x.tagInfo("caTop") else -99), float, help="CA8 jet nSubJets"),
 ])
+
+topJetType = NTupleObjectType("topJet",  baseObjectTypes = [ fourVectorType ], variables = [
+])
+
+topJetInfoType = NTupleObjectType("topJetInfo", variables = [
+    NTupleVariable("topMass", lambda x : (x.properties().topMass if x.properties else -99), float, help="CA15 jet topMass"),
+    NTupleVariable("minMass", lambda x : (x.properties().minMass if x.properties else -99), float, help="CA15 jet minMass"),
+    NTupleVariable("nSubJets", lambda x : (x.properties().nSubJets if x.properties else -99), float, help="CA15 jet nSubJets"),
+])
+
+njettinesType = NTupleObjectType("builtInType", variables = [
+        NTupleVariable("tau1", lambda x : x[0]),
+        NTupleVariable("tau2", lambda x : x[1]),
+        NTupleVariable("tau3", lambda x : x[2]),
+])
+
       
 ##------------------------------------------  
 ## MET
