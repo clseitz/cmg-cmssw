@@ -59,9 +59,20 @@ ttHEventAna = cfg.Analyzer(
     minJets25 = 0,
     )
 
+from CMGTools.TTHAnalysis.analyzers.ttHTopJetAnalyzer import ttHTopJetAnalyzer
+ttHTopJetAna = cfg.Analyzer(
+    ttHTopJetAnalyzer, name = 'ttHTopJetAnalyzer',
+    jetCol = 'cmsTopTagCa15PFJetsCHS',
+    tagCol = 'ca15CMSTopTagInfos',
+    jettinesCol = 'ca15PFJetsCHSNjettiness',
+    jetPt = 100.,
+    jetEta = 2.4,
+    )
 ## Insert the SV analyzer in the sequence
 susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHFatJetAna)
+susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
+                        ttHTopJetAna)
 susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHSVAna)
 #susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
@@ -102,7 +113,6 @@ treeProducer = cfg.Analyzer(
 from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
 #selectedComponents = [ SingleMu, DoubleElectron, TTHToWW_PUS14, DYJetsToLL_M50_PU20bx25, TTJets_PUS14 ]
 
-
 #-------- SEQUENCE
 
 sequence = cfg.Sequence(susyCoreSequence+[
@@ -117,9 +127,9 @@ sequence = cfg.Sequence(susyCoreSequence+[
 test = 1
 if test==1:
     # test a single component, using a single thread.
-    comp = TTJets
-#    comp = SMS_T1tttt_2J_mGl1500_mLSP100
-    comp.files = comp.files[:1]
+#    comp = TTJets
+    comp = SMS_T1tttt_2J_mGl1500_mLSP100
+    comp.files = ['SMS_T1ttt_1500_100_92000.root']#comp.files[:1]
     selectedComponents = [comp]
     comp.splitFactor = 1
 elif test==2:    
