@@ -44,9 +44,15 @@ susySingleLepton_collections.update({
             ##------------------------------------------------
             "cleanJetsAll"       : NTupleCollection("Jet",     jetTypeSusy, 25, help="Cental jets after full selection and cleaning, sorted by pt"),
             "fatJets"         : NTupleCollection("FatJet",  fatJetType,  15, help="AK8 jets, sorted by pt"),
-            "topJets"         : NTupleCollection("TopJet",  topJetType,  15, help="AK8 jets, sorted by pt"),
-            "topJetsInfo"         : NTupleCollection("TopJetInfo",  topJetInfoType,  15, help="AK8 jets, sorted by pt"),
-            "njettines"         : NTupleCollection("Njettines",  njettinesType,  15, help="AK8 jets, sorted by pt"),
+
+            "topJets_0"         : NTupleCollection("FatJet15",  topJetType,  15, help="AK8 jets, sorted by pt"),
+            "topJetsInfo_0"         : NTupleCollection("FatJet15Info",  topJetInfoType,  15, help="AK8 jets, sorted by pt"),
+            "topNjettines_0"         : NTupleCollection("FatJet15_Njettines",  njettinesType,  15, help="AK8 jets, sorted by pt"),
+
+
+            "topJets_1"         : NTupleCollection("FatJet08",  topJetType,  15, help="AK8 jets, sorted by pt"),
+            "topJetsInfo_1"         : NTupleCollection("FatJet08Info",  topJetInfoType,  15, help="AK8 jets, sorted by pt"),
+            "topNjettines_1"         : NTupleCollection("FatJet08_Njettines",  njettinesType,  15, help="AK8 jets, sorted by pt"),
             
             #"reclusteredFatJets" : NTupleCollection("RCFatJet",     fourVectorType,20, help="FatJets reclusterd from ak4 cleanJetsAll"),
             ##------------------------------------------------
