@@ -17,14 +17,20 @@ class ttHTopJetAnalyzer( Analyzer ):
 
     def declareHandles(self):
         super(ttHTopJetAnalyzer, self).declareHandles()
-        self.handles['jets'] = AutoHandle( self.cfg_ana.jetCol, 'vector<reco::BasicJet>' )
-        self.handles['pfjets'] = AutoHandle( 'ca15PFJetsCHSsoftdropz15b00', 'vector<reco::PFJet>' )
-        self.handles['basicjets'] = AutoHandle( 'cmsTopTagCa15PFJetsCHS', 'vector<reco::BasicJet' )
+        self.handles['jets_0'] = AutoHandle( self.cfg_ana.jetCol_0, 'vector<reco::BasicJet>' )
+        self.handles['toptaginfo_0'] = AutoHandle( self.cfg_ana.tagCol_0,'vector<reco::CATopJetTagInfo>')
+        self.handles['njettinestau1_0'] = AutoHandle( (self.cfg_ana.jettinesCol_0,"tau1"),'edm::ValueMap<float>')
+        self.handles['njettinestau2_0'] = AutoHandle( (self.cfg_ana.jettinesCol_0,"tau2"),'edm::ValueMap<float>')
+        self.handles['njettinestau3_0'] = AutoHandle( (self.cfg_ana.jettinesCol_0,"tau3"),'edm::ValueMap<float>')
 
-        self.handles['toptaginfo'] = AutoHandle( self.cfg_ana.tagCol,'vector<reco::CATopJetTagInfo>')
-        self.handles['njettinestau1'] = AutoHandle( (self.cfg_ana.jettinesCol,"tau1"),'edm::ValueMap<float>')
-        self.handles['njettinestau2'] = AutoHandle( (self.cfg_ana.jettinesCol,"tau2"),'edm::ValueMap<float>')
-        self.handles['njettinestau3'] = AutoHandle( (self.cfg_ana.jettinesCol,"tau3"),'edm::ValueMap<float>')
+        
+        self.handles['jets_1'] = AutoHandle( self.cfg_ana.jetCol_1, 'vector<reco::BasicJet>' )
+        self.handles['toptaginfo_1'] = AutoHandle( self.cfg_ana.tagCol_1,'vector<reco::CATopJetTagInfo>')
+        self.handles['njettinestau1_1'] = AutoHandle( (self.cfg_ana.jettinesCol_1,"tau1"),'edm::ValueMap<float>')
+        self.handles['njettinestau2_1'] = AutoHandle( (self.cfg_ana.jettinesCol_1,"tau2"),'edm::ValueMap<float>')
+        self.handles['njettinestau3_1'] = AutoHandle( (self.cfg_ana.jettinesCol_1,"tau3"),'edm::ValueMap<float>')
+
+        self.handles['test'] = AutoHandle( 'LooseMultiRHTTJetsCHS','vector<reco::HTTTopJetTagInfo>')
 
     def beginLoop(self, setup):
         super(ttHTopJetAnalyzer,self).beginLoop(setup)
@@ -32,30 +38,41 @@ class ttHTopJetAnalyzer( Analyzer ):
     def process(self, event):
         self.readCollections( event.input )
 
-        ## Read jets, if necessary recalibrate and shift MET
-        allJets = self.handles['jets'].product()
-        allTopInfo = self.handles['toptaginfo'].product()
-        allTopTau1 = self.handles['njettinestau1'].product()
-        allTopTau2 = self.handles['njettinestau2'].product()
-        allTopTau3 = self.handles['njettinestau3'].product()
+        
+        TestInfo = self.handles['test'].product()
 
-        print len(allJets), len(allTopTau1)
+        #print len(allJets), len(allTopTau1)
         ## Apply jet selection
-        event.topJets     = []
-        event.topJetsInfo = []
-        event.njettines = []
+        event.topJets_0     = []
+        event.topJetsInfo_0 = []
+        event.topNjettines_0 = []
 
-#        for (jet,topinfo,tau1,tau2,tau3) in zip(allJets, allTopInfo, allTopTau1, allTopTau2, allTopTau3):
-        for i in range(0,len(allJets)):
-            taus = []
-            if self.testJetNoID( allJets[i] ): 
-                event.topJets.append(allJets[i]) 
-                event.topJetsInfo.append(allTopInfo[i])
-                taus.append(allTopTau1.get(i))
-                taus.append(allTopTau2.get(i))
-                taus.append(allTopTau3.get(i))
-                event.njettines.append(taus)
-                
+        event.topJets_1     = []
+        event.topJetsInfo_1 = []
+        event.topNjettines_1 = []
+
+        Jets = [event.topJets_0,event.topJets_1]
+        JetsInfo = [event.topJetsInfo_0,event.topJetsInfo_1]
+        JetsNjettines = [event.topNjettines_0,event.topNjettines_1]
+
+        for types in range(0,2):
+            allJets = self.handles['jets_'+str(types)].product()
+            allTopInfo = self.handles['toptaginfo_'+str(types)].product()
+            allTopTau1 = self.handles['njettinestau1_'+str(types)].product()
+            allTopTau2 = self.handles['njettinestau2_'+str(types)].product()
+            allTopTau3 = self.handles['njettinestau3_'+str(types)].product()
+            
+            for i in range(0,len(allJets)):
+                taus = []
+                if self.testJetNoID( allJets[i] ): 
+                    Jets[types].append(allJets[i]) 
+                    JetsInfo[types].append(allTopInfo[i])
+                    taus.append(allTopTau1.get(i))
+                    taus.append(allTopTau2.get(i))
+                    taus.append(allTopTau3.get(i))
+                    JetsNjettines[types].append(taus)
+
+
     def testJetNoID( self, jet ):
         return jet.pt() > self.cfg_ana.jetPt and \
                abs( jet.eta() ) < self.cfg_ana.jetEta;
