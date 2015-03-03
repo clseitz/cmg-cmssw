@@ -62,9 +62,12 @@ ttHEventAna = cfg.Analyzer(
 from CMGTools.TTHAnalysis.analyzers.ttHTopJetAnalyzer import ttHTopJetAnalyzer
 ttHTopJetAna = cfg.Analyzer(
     ttHTopJetAnalyzer, name = 'ttHTopJetAnalyzer',
-    jetCol = 'cmsTopTagCa15PFJetsCHS',
-    tagCol = 'ca15CMSTopTagInfos',
-    jettinesCol = 'ca15PFJetsCHSNjettiness',
+    jetCol_0 = 'cmsTopTagCa15PFJetsCHS',
+    tagCol_0 = 'ca15CMSTopTagInfos',
+    jettinesCol_0 = 'ca15PFJetsCHSNjettiness',
+    jetCol_1 = 'cmsTopTagCa08PFJetsCHS',
+    tagCol_1 = 'ca08CMSTopTagInfos',
+    jettinesCol_1 = 'ca08PFJetsCHSNjettiness',
     jetPt = 100.,
     jetEta = 2.4,
     )
@@ -86,7 +89,7 @@ ttHSTSkimmer = cfg.Analyzer(
     )
 
 
-from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14  import *
+#from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14  import *
 
 triggerFlagsAna.triggerBits = {
 #put trigger here for data
@@ -110,9 +113,9 @@ treeProducer = cfg.Analyzer(
 
 #-------- SAMPLES AND TRIGGERS -----------
 
-from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
+from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14_private import *
 #selectedComponents = [ SingleMu, DoubleElectron, TTHToWW_PUS14, DYJetsToLL_M50_PU20bx25, TTJets_PUS14 ]
-
+#SMS_T1bbbb_2J_mGl1500_mLSP100 = kreator.makeMCComponent("SMS_T1bbbb_2J_mGl1500_mLSP100", "/SMS-T1bbbb_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1/MINIAODSIM", "CMS", ".*root",0.0141903)  
 #-------- SEQUENCE
 
 sequence = cfg.Sequence(susyCoreSequence+[
@@ -128,8 +131,8 @@ test = 1
 if test==1:
     # test a single component, using a single thread.
 #    comp = TTJets
-    comp = SMS_T1tttt_2J_mGl1500_mLSP100
-    comp.files = ['SMS_T1ttt_1500_100_92000.root']#comp.files[:1]
+    comp = SMS_T1tttt_2J_mGl1500_mLSP100_toptag
+#    comp.files = comp.files[:1]
     selectedComponents = [comp]
     comp.splitFactor = 1
 elif test==2:    
