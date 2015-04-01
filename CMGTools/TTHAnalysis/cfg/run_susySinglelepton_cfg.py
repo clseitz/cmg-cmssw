@@ -142,9 +142,9 @@ if test==1:
     # test a single component, using a single thread.
     comp = TTJets
 #    comp = SMS_T1tttt_2J_mGl1500_mLSP100
-    comp.files = comp.files[:1]
+    #comp.files = comp.files[:1]
     selectedComponents = [comp]
-    comp.splitFactor = 1
+    comp.splitFactor = 50
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
@@ -152,7 +152,8 @@ elif test==2:
         comp.files = comp.files[:1]
 
 from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor
-preprocessor = CmsswPreprocessor("../../../JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py")
+preprocessor = CmsswPreprocessor("%s/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py" % os.environ['CMSSW_BASE'])
+
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 config = cfg.Config( components = selectedComponents,
                      sequence = sequence,
