@@ -45,6 +45,7 @@ ttHLepSkim.maxLeptons = 999
 
 # --- JET-LEPTON CLEANING ---
 jetAna.minLepPt = 10 
+#jetAna.jetCol = 'patJetsAK4PFCHS'
 
 jetAna.mcGT = "PHYS14_V4_MC"
 jetAna.doQG = True
@@ -81,7 +82,7 @@ ttHReclusterJets = cfg.Analyzer(
     etaSubJet = 5.0,
             )
 
-from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14  import *
+from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14_private  import *
 
 triggerFlagsAna.triggerBits = {
 #put trigger here for data
@@ -105,10 +106,23 @@ treeProducer = cfg.Analyzer(
 
 #-------- SAMPLES AND TRIGGERS -----------
 
-from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
+#from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
 #selectedComponents = [QCD_HT_100To250, QCD_HT_250To500, QCD_HT_500To1000, QCD_HT_1000ToInf,TTJets, TTWJets, TTZJets, TTH, SMS_T1tttt_2J_mGl1500_mLSP100, SMS_T1tttt_2J_mGl1200_mLSP800] + SingleTop + WJetsToLNuHT + DYJetsM50HT + T5ttttDeg + T1ttbbWW + T5qqqqWW
 
-
+from CMGTools.TTHAnalysis.analyzers.ttHJetToolboxAnalyzer import ttHJetToolboxAnalyzer
+ttHJetToolboxAnalyzer = cfg.Analyzer(
+    ttHJetToolboxAnalyzer, name="ttHJetToolboxAnalyzer",
+    recalibrateJets = True,
+    jetPt = 25.,
+    jetLepDR = 0.4,
+    jetEtaCentral = 2.5,
+    minLepPt = 10,
+    jetCol = 'patJetsAK4PFCHS',
+    mcGT = "PHYS14_V4_MC",
+    doQG = True,
+    smearJets = False,
+    jecPath = "%s/src/CMGTools/RootTools/data/jec/" % os.environ['CMSSW_BASE'],
+    )
 
 
 #-------- SEQUENCE
@@ -117,6 +131,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
     ttHSTSkimmer,
     ttHReclusterJets,
+    ttHJetToolboxAnalyzer,
     treeProducer,
     ])
 
@@ -136,8 +151,11 @@ elif test==2:
         comp.splitFactor = 1
         comp.files = comp.files[:1]
 
+from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor
+preprocessor = CmsswPreprocessor("../../../JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py")
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 config = cfg.Config( components = selectedComponents,
                      sequence = sequence,
                      services = [],
+                     preprocessor=preprocessor,
                      events_class = Events)
