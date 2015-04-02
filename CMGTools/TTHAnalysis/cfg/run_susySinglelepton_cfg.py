@@ -82,7 +82,7 @@ ttHReclusterJets = cfg.Analyzer(
     etaSubJet = 5.0,
             )
 
-from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14_private  import *
+from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14  import *
 
 triggerFlagsAna.triggerBits = {
 #put trigger here for data
@@ -144,7 +144,7 @@ if test==1:
 #    comp = SMS_T1tttt_2J_mGl1500_mLSP100
     #comp.files = comp.files[:1]
     selectedComponents = [comp]
-    comp.splitFactor = 50
+    comp.splitFactor = 1
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
