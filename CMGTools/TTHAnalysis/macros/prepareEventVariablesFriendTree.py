@@ -13,8 +13,11 @@ from CMGTools.TTHAnalysis.tools.eventVars_1l_extra import EventVars1L_extra
 MODULES.append( ('1l_Extra', EventVars1L_extra()) )
 from CMGTools.TTHAnalysis.tools.eventVars_1l_genLevel import EventVars1LGenLevel
 MODULES.append( ('1l_BasicsGen', EventVars1LGenLevel()) )
-from CMGTools.TTHAnalysis.tools.resolvedTopTagVars_1l import resolvedTopTagVars1l
-MODULES.append( ('1l_resolvedTopTagVars', resolvedTopTagVars1l()) )
+#from CMGTools.TTHAnalysis.tools.resolvedTopTagVars_1l import resolvedTopTagVars1l
+#MODULES.append( ('1l_resolvedTopTagVars', resolvedTopTagVars1l()) )
+
+from CMGTools.TTHAnalysis.tools.extraJets_1l import ExtraJets1L
+MODULES.append( ('1l_ExtraJets', ExtraJets1L()) )
 
 '''
 # old module flow
