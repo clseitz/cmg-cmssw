@@ -113,6 +113,15 @@ jetTypeSusyExtra = NTupleObjectType("jetSusyExtra",  baseObjectTypes = [ jetType
     NTupleVariable("HFEMMult", lambda x : x.HFEMMultiplicity(), int, mcOnly = False,help="HFEMMultiplicity from PFJet.h"),
 ])
 
+toolboxJetType = NTupleObjectType("toolboxJet",  baseObjectTypes = [ jetType ], variables = [
+    NTupleVariable("prunedMass",  lambda x : x.userFloat("ak4PFJetsCHSPrunedLinks"),  float, help="pruned mass"),
+    NTupleVariable("trimmedMass", lambda x : x.userFloat("ak4PFJetsCHSTrimmedLinks"), float, help="trimmed mass"),
+    NTupleVariable("filteredMass", lambda x : x.userFloat("ak4PFJetsCHSFilteredLinks"), float, help="filtered mass"),
+    NTupleVariable("tau1", lambda x : x.userFloat("NjettinessAK4:tau1"), float, help="1-subjettiness"),
+    NTupleVariable("tau2", lambda x : x.userFloat("NjettinessAK4:tau2"), float, help="2-subjettiness"),
+    NTupleVariable("tau3", lambda x : x.userFloat("NjettinessAK4:tau3"), float, help="3-subjettiness"),
+])
+
 fatJetType = NTupleObjectType("fatJet",  baseObjectTypes = [ jetType ], variables = [
     NTupleVariable("prunedMass",  lambda x : x.userFloat("ak8PFJetsCHSPrunedLinks"),  float, help="pruned mass"),
     NTupleVariable("trimmedMass", lambda x : x.userFloat("ak8PFJetsCHSTrimmedLinks"), float, help="trimmed mass"),
