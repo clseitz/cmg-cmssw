@@ -54,6 +54,36 @@ metAna.recalibrate = False #should be false in susycore, already
 
 isoTrackAna.setOff=False
 
+# --- JET-LEPTON CLEANING ---
+jetAnaTEST = cfg.Analyzer(
+    JetAnalyzer, name='jetAnalyzerTEST',
+    jetCol = 'patJetsAK4PFCHS',
+    copyJetsByValue = True,
+    genJetCol = ('patJetsAK4PFCHS','genJets'),
+    rho = ('fixedGridRhoFastjetAll','',''),
+    cleanSelectedLeptons = False, #Whether to clean 'selectedLeptons' after disambiguation. Treat with care (= 'False') if running Jetanalyzer more than once
+    jetPt = 25.,
+    jetEta = 4.7,
+    jetEtaCentral = 2.4,
+    jetLepDR = 0.4,
+    jetLepArbitration = (lambda jet,lepton : lepton), # you can decide which to keep in case of overlaps; e.g. if the jet is b-tagged you might want to keep the jet
+    minLepPt = 10,
+    relaxJetId = False,
+    doPuId = False, # Not commissioned in 7.0.X
+    recalibrateJets = "MC", # True, False, 'MC', 'Data'
+    recalibrationType = "AK4PFchs",
+    mcGT     = "PHYS14_V4_MC",
+    jecPath = "%s/src/CMGTools/RootTools/data/jec/" % os.environ['CMSSW_BASE'],
+    shiftJEC = 0, # set to +1 or -1 to get +/-1 sigma shifts
+    smearJets = False,
+    shiftJER = 0, # set to +1 or -1 to get +/-1 sigma shifts  
+    cleanJetsFromFirstPhoton = False,
+    cleanJetsFromTaus = False,
+    cleanJetsFromIsoTracks = False,
+    doQG = False,
+    cleanGenJetsFromPhoton = False
+    )
+jetAnaTEST.collectionPostFix="TEST"
 
 from CMGTools.TTHAnalysis.analyzers.ttHLepEventAnalyzer import ttHLepEventAnalyzer
 ttHEventAna = cfg.Analyzer(
@@ -66,6 +96,7 @@ susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHFatJetAna)
 susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna), 
                         ttHSVAna)
+susyCoreSequence.insert(susyCoreSequence.index(jetAna), jetAnaTEST)
 
 ## Single lepton + ST skim
 from CMGTools.TTHAnalysis.analyzers.ttHSTSkimmer import ttHSTSkimmer
@@ -108,6 +139,8 @@ treeProducer = cfg.Analyzer(
 from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
 #selectedComponents = [QCD_HT_100To250, QCD_HT_250To500, QCD_HT_500To1000, QCD_HT_1000ToInf,TTJets, TTWJets, TTZJets, TTH, SMS_T1tttt_2J_mGl1500_mLSP100, SMS_T1tttt_2J_mGl1200_mLSP800] + SingleTop + WJetsToLNuHT + DYJetsM50HT + T5ttttDeg + T1ttbbWW + T5qqqqWW
 
+selectedComponents = [SMS_T1tttt_2J_mGl1200_mLSP800,SMS_T2tt_2J_mStop850_mLSP100,SMS_T2tt_2J_mStop650_mLSP325]
+
 
 
 
@@ -119,10 +152,11 @@ sequence = cfg.Sequence(susyCoreSequence+[
     ttHReclusterJets,
     treeProducer,
     ])
-
+from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor
+preprocessor = CmsswPreprocessor("%s/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py" % os.environ['CMSSW_BASE'])
 
 #-------- HOW TO RUN
-test = 1
+test = 2
 if test==1:
     # test a single component, using a single thread.
     comp = TTJets
@@ -133,11 +167,12 @@ if test==1:
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
-        comp.splitFactor = 1
-        comp.files = comp.files[:1]
-
+        comp.splitFactor = len(comp.files) 
+#        comp.files = comp.files[:1]
+        
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 config = cfg.Config( components = selectedComponents,
                      sequence = sequence,
                      services = [],
+                     preprocessor=preprocessor,
                      events_class = Events)
