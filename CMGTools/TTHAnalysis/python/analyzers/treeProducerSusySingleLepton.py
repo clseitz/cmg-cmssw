@@ -38,3 +38,16 @@ susySingleLepton_collections.update({
             "ivf"       : NTupleCollection("SV",     svType, 20, help="SVs from IVF"),
 })
 
+##adding new jet variables
+
+AK4ReclusterJet = NTupleObjectType("AK4ReclusterJet",  baseObjectTypes = [ jetType ], variables = [ 
+        NTupleVariable("prunedMass",  lambda x : x.userFloat("ak4PFJetsCHSPrunedMass"),  float, help="pruned mass"),
+        NTupleVariable("trimmedMass", lambda x : x.userFloat("ak4PFJetsCHSTrimmedMass"), float, help="trimmed mass"),
+        NTupleVariable("filteredMass", lambda x : x.userFloat("ak4PFJetsCHSFilteredMass"), float, help="filtered mass"),
+        NTupleVariable("tau1", lambda x : x.userFloat("NjettinessAK4CHS:tau1"), float, help="1-subjettiness"),          
+        NTupleVariable("tau2", lambda x : x.userFloat("NjettinessAK4CHS:tau2"), float, help="2-subjettiness"),          
+        NTupleVariable("tau3", lambda x : x.userFloat("NjettinessAK4CHS:tau3"), float, help="3-subjettiness"),          
+])  
+susySingleLepton_collections.update({
+        "cleanJetsAllTEST"       : NTupleCollection("JetTEST", AK4ReclusterJet, 25, help="Reclustered jets TEST sorted by pt"), 
+        })
