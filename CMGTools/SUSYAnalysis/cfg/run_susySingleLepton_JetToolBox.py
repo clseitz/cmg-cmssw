@@ -150,8 +150,10 @@ sequence = cfg.Sequence(susyCoreSequence+[
                 #ttHReclusterJets,
                 treeProducer,
                 ])
+from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor                                                      
+preprocessor = CmsswPreprocessor("%s/src/CMGTools/SUSYAnalysis/cfg/jettoolbox_cfg.py" % os.environ['CMSSW_BASE'])
 
-
+#preprocessor = CmsswPreprocessor("%s/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py" % os.environ['CMSSW_BASE']) 
 #-------- HOW TO RUN
 test = 1
 if test==1:
@@ -176,4 +178,5 @@ from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 config = cfg.Config( components = selectedComponents,
                      sequence = sequence,
                      services = [],
+		     preprocessor=preprocessor,
                      events_class = Events)
