@@ -50,7 +50,42 @@ jetAna.mcGT = "Summer15_V5_p6_MC"
 jetAna.doQG = True
 jetAna.smearJets = False #should be false in susycore, already
 jetAna.recalibrateJets = True #should be true in susycore, already
-metAna.recalibrate = True #should be false in susycore, already
+metAna.recalibrate = False #should be false in susycore, already
+
+print "before"
+jetAnaTEST = cfg.Analyzer(
+	JetAnalyzer, name='jetAnalyzerTEST',
+#	jetCol = 'slimmedJets',
+	jetCol = 'selectedPatJetsAK4PFCHS',
+	copyJetsByValue = True,
+	genJetCol = ('selectedPatJetsAK4PFCHS','genJets'),
+#        genJetCol = ('slimmedGenJets'),
+	rho = ('fixedGridRhoFastjetAll','',''),
+	cleanSelectedLeptons = False, 
+	jetPt = 25.,
+	jetEta = 4.7,
+	jetEtaCentral = 2.4,
+	jetLepDR = 0.4,
+	jetLepArbitration = (lambda jet,lepton : lepton), 
+	minLepPt = 10,
+	relaxJetId = False,
+	doPuId = False, 
+	recalibrateJets = True, # True, False, 'MC', 'Data'
+	recalibrationType = "AK4PFchs",
+	mcGT     = "Summer15_V5_p6_MC",
+	jecPath = "%s/src/CMGTools/RootTools/data/jec/" % os.environ['CMSSW_BASE'],
+	shiftJEC = 0, # set to +1 or -1 to get +/-1 sigma shifts                                                    
+	addJECShifts = False, 
+	smearJets = False,
+	shiftJER = 0, # set to +1 or -1 to get +/-1 sigma shifts                                                    
+	alwaysCleanPhotons = False,
+	cleanJetsFromFirstPhoton = False,
+	cleanJetsFromTaus = False,
+	cleanJetsFromIsoTracks = False,
+	doQG = False,
+	cleanGenJetsFromPhoton = False
+	)
+jetAnaTEST.collectionPostFix="TEST"
 
 isoTrackAna.setOff=False
 
@@ -68,6 +103,8 @@ susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHFatJetAna)
 susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHSVAna)
+## Add jetAnaTest after JetAna is executed (insert(position, analyzer)
+susyCoreSequence.insert(susyCoreSequence.index(jetAna), jetAnaTEST)
 
 ## Single lepton + ST skim
 from CMGTools.TTHAnalysis.analyzers.ttHSTSkimmer import ttHSTSkimmer
@@ -150,10 +187,9 @@ sequence = cfg.Sequence(susyCoreSequence+[
                 #ttHReclusterJets,
                 treeProducer,
                 ])
-from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor                                                      
+from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor                                          
 preprocessor = CmsswPreprocessor("%s/src/CMGTools/SUSYAnalysis/cfg/jettoolbox_cfg.py" % os.environ['CMSSW_BASE'])
 
-#preprocessor = CmsswPreprocessor("%s/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py" % os.environ['CMSSW_BASE']) 
 #-------- HOW TO RUN
 test = 1
 if test==1:
