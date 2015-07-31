@@ -7,9 +7,11 @@ MODULES = []
 
 from CMGTools.SUSYAnalysis.tools.eventVars_1l_base import EventVars1L_base
 MODULES.append( ('1l_Basics', EventVars1L_base()) )
-from CMGTools.SUSYAnalysis.tools.eventVars_1l_triggers import EventVars1L_triggers
+from CMGTools.SUSYAnalysis.tools.extraJets_1l import ExtraJets_1l
+MODULES.append( ('1l_ExtraJets', ExtraJets_1l()) )
+
+'''from CMGTools.SUSYAnalysis.tools.eventVars_1l_triggers import EventVars1L_triggers
 MODULES.append( ('1l_Triggers', EventVars1L_triggers()) )
-'''
 from CMGTools.SUSYAnalysis.tools.eventVars_1l_bkgDilep import EventVars1L_bkgDilep
 MODULES.append( ('1l_bkgDilep', EventVars1L_bkgDilep()) )
 from CMGTools.SUSYAnalysis.tools.eventVars_1l_top import EventVars1L_Top

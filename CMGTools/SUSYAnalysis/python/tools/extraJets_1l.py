@@ -12,7 +12,7 @@ def deltaR(eta1,eta2,phi1,phi2):
   dphi = ROOT.TVector2.Phi_mpi_pi(phi1-phi2);                                                                               
   return sqrt( deta*deta+dphi*dphi )  
 
-class ExtraJets1L:
+class ExtraJets_1l:
 	def __init__(self):
           self.branches = [("nGenTop","I"),("GenTopidx","I",10,"nGenTop"),
                            ("GenTopDRdecay","F",10,"nGenTop"), ("GenTopPt","F",10,"nGenTop"),
