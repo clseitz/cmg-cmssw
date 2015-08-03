@@ -5,8 +5,11 @@
 #T5qqqqWW_Gl1200_Chi1000_LSP800+ : SMS_T5qqqqWW_Gl1200_Chi1000_LSP800 : 0.0856418 ; FillColor=ROOT.kYellow-3, Label ="T5q^{4} 1.2/1/0.8"
 #T5qqqqWW_Gl1200_Chi1000_LSP800+ : T5qqqqWW_mGo1200_mCh1000_mChi800 : 0.0856418 ; FillColor=ROOT.kYellow-3, Label ="T5q^{4} 1.2/1/0.8"
 #T1tttt_SqGl15_20_01+: SMS_SqGl_T1tttt_2J_mGl1500_mSq_2000_mLSP100 : 0.0162 ; FillColor=ROOT.kRed,   Label="T1t^{4}_{\#tilde{q}\#tilde{g} }1.5/2.0/0.1"
-T1tttt_HM_1200_800+: SMS_T1tttt_2J_mGl1200_mLSP800 : 0.0856418 ; FillColor=ROOT.kBlack,   Label="T1t^{4} 1.2/0.8" 
-T1tttt_HL_1500_100+: SMS_T1tttt_2J_mGl1500_mLSP100 : 0.0141903 ; FillColor=ROOT.kMagenta,   Label="T1t^{4} 1.5/0.1" 
+#T1tttt_HM_1200_800+: SMS_T1tttt_2J_mGl1200_mLSP800 : 0.0856418 ; FillColor=ROOT.kBlack,   Label="T1t^{4} 1.2/0.8" 
+#T1tttt_HL_1500_100+: SMS_T1tttt_2J_mGl1500_mLSP100 : 0.0141903 ; FillColor=ROOT.kMagenta,   Label="T1t^{4} 1.5/0.1" 
+#use private samples
+T1tttt_HL_1500_100+: T1tttt_mGo1500_mChi100 : 0.0141903 ; FillColor=ROOT.kMagenta,   Label="T1t^{4} 1.5/0.1" 
+T1tttt_HM_1200_800+: T1tttt_mGo1200_mChi800 : 0.0856418 ; FillColor=ROOT.kBlack,   Label="T1t^{4} 1.2/0.8" 
 #T1ttbbWW_1300_300_290+: T1ttbbWW_mGo1300_mCh300_mChi290 : 0.0460525 ; FillColor = ROOT.kRed, Label="T12^{tbW} 1.3/0.3/0.290"
 #T1ttbbWW_1300_300_295+: T1ttbbWW_mGo1300_mCh300_mChi295 : 0.0460525 ; FillColor = ROOT.kRed+3, Label="T12^{tbW} 1.3/0.3/0.295"
 #T5ttttDeg_1300_300_280+: T5ttttDeg_mGo1300_mStop300_mChi280 : 0.0460525 ; FillColor = ROOT.kYellow-3, Label ="T5t^{4} 1.3/0.3/0.28"
