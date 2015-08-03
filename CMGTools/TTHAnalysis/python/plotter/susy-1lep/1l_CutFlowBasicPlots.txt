@@ -10,8 +10,3 @@ hnBJetLogY:      nBJetMedium30                          : 10,0,10   ;  XTitle="b
 hnBJet:      nBJetMedium30                          : 10,0,10   ;  XTitle="b-jet multiplicity (Med)"
 hdPhiLepWLogy:   fabs(DeltaPhiLepW)                        : 20,0,3.141   ; XTitle="#Delta #varphi (lep\,W)", IncludeOverflows=False, Logy
 hdPhiLepW:   fabs(DeltaPhiLepW)                        : 20,0,3.141   ; XTitle="#Delta #varphi (lep\,W)", IncludeOverflows=False 
-Topness:   Topness              : 15,-10,20; XTitle="Topness"
-TopnessLogy:   Topness              : 15,-10,20; XTitle="Topness", Logy, MoreY=100
-MT2W:   MT2W              : 20,0,500; XTitle="MT2W"
-MT2WLogy:   MT2W              : 20,0,500; XTitle="MT2W", Logy, MoreY=100
-DEMOfunctionscc_deltaPhiLepMET:  fabs(deltaPhi(LepGood_phi[tightLepsIdx[0]],met_phi)) : 40,0,3.141 ; XTitle = "#Delta #varphi (lep\,met)", Logy
