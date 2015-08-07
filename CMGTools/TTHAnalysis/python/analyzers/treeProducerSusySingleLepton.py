@@ -42,6 +42,7 @@ susySingleLepton_collections.update({
 
 AK4ReclusterJet = NTupleObjectType("AK4ReclusterJet",  baseObjectTypes = [ jetType ], variables = [ 
         NTupleVariable("prunedMass",  lambda x : x.userFloat("ak4PFJetsCHSPrunedMass"),  float, help="pruned mass"),
+        NTupleVariable("prunedMass",  lambda x : x.userFloat("ak4PFJetsCHSSoftDropMass"),  float, help="soft drop mass"),
         NTupleVariable("trimmedMass", lambda x : x.userFloat("ak4PFJetsCHSTrimmedMass"), float, help="trimmed mass"),
         NTupleVariable("filteredMass", lambda x : x.userFloat("ak4PFJetsCHSFilteredMass"), float, help="filtered mass"),
         NTupleVariable("tau1", lambda x : x.userFloat("NjettinessAK4CHS:tau1"), float, help="1-subjettiness"),          
