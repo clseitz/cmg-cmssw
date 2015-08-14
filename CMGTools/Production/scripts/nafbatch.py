@@ -17,7 +17,7 @@ def batchScriptNAF( jobDir='/nfs/dust/cms/user/lobanov/SUSY/Run2/CMG/CMSSW_7_0_6
 ## make sure the right shell will be used
 #$ -S /bin/zsh
 ## the cpu time for this job
-#$ -l h_rt=02:59:00
+#$ -l h_rt=23:59:00
 ## the maximum memory usage of this job
 #$ -l h_vmem=3900M
 ## operating system
