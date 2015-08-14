@@ -46,9 +46,9 @@ class EventVars1L_triggers:
         ret['HLT_Ele105'] = event.HLT_ElNoIso
         '''
 
-        ret['HLT_EleOR'] = event.HLT_Ele105 or event.HLT_EleHTMET
-        ret['HLT_MuOR'] = event.HLT_Mu50 or event.HLT_MuHTMET
-        ret['HLT_LepOR'] = event.HLT_Mu50 or event.HLT_MuHTMET or event.HLT_Ele105 or event.HLT_EleHTMET
+        #ret['HLT_EleOR'] = event.HLT_Ele105 or event.HLT_EleHTMET
+        #ret['HLT_MuOR'] = event.HLT_Mu50 or event.HLT_MuHTMET
+        #ret['HLT_LepOR'] = event.HLT_Mu50 or event.HLT_MuHTMET or event.HLT_Ele105 or event.HLT_EleHTMET
 
         ## loop over all HLT names and set them in tree
         for var in self.branches:
