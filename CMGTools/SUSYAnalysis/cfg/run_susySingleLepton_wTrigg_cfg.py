@@ -126,7 +126,7 @@ hbheFilterAna = cfg.Analyzer(
 
 
 removeResiduals = True
-isData=False
+isData=True
 # -------------------- Running pre-processor
 import subprocess
 jecDBFile = '$CMSSW_BASE/src/CMGTools/RootTools/data/jec/Summer15_50nsV2_MC.db'
@@ -241,15 +241,14 @@ elif test=="data":
 	isData = True
 	#selectedComponents = [ SingleElectron_Run2015B, SingleMuon_Run2015B ]
 	#selectedComponents = [ SingleElectron_Run2015B ]
-	#selectedComponents = [ SingleElectron_Run2015B_17Jul ]
-	selectedComponents = [ SingleMuon_Run2015B_17Jul ]
+	selectedComponents = [ SingleElectron_Run2015B_17Jul, SingleElectron_Run2015B, SingleMuon_Run2015B_17Jul,SingleMuon_Run2015B ]
+#	selectedComponents = [ SingleMuon_Run2015B_17Jul ]
 	#selectedComponents = [ JetHT_Run2015B_17Jul ]
 	#selectedComponents = [ HTMHT_Run2015B ]
 
 	for comp in selectedComponents:
-		#comp.splitFactor = len(comp.files)
-		#comp.fineSplitFactor = 10
-		comp.files = comp.files[:1]
+		comp.splitFactor = len(comp.files)
+		#comp.files = comp.files[:1]
 
 
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
