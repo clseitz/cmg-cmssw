@@ -344,7 +344,7 @@ ttHHeavyFlavourHadronAna = cfg.Analyzer(
 metAna = cfg.Analyzer(
     METAnalyzer, name="metAnalyzer",
     metCollection     = "slimmedMETs",
-    noPUMetCollection = "slimmedMETs",    
+    noPUMetCollection = "slimmedMETs",
     copyMETsByValue = False,
     doTkMet = False,
     doMetNoPU = True,
@@ -371,7 +371,7 @@ ttHCoreEventAna = cfg.Analyzer(
 
 
 metNoHFAna = cfg.Analyzer(
-    METAnalyzer, name="metAnalyzer",
+    METAnalyzer, name="metNoHFAnalyzer",
     metCollection     = "slimmedMETsNoHF",
     noPUMetCollection = "slimmedMETsNoHF",
     copyMETsByValue = False,
