@@ -1,0 +1,9 @@
+1tl: nLep == 1 && nEl == 1 && Selected == 1 && Lep_pt > 25 && nVeto == 0
+ht500: HT >500
+lt200: LTNoHF > 250
+geq6j:nJet >= 6
+lsl80: LSLjetptGT80==1
+1nB: nBJet>=1
+dp1: dPhiNoHF>1
+Trigger: !isData || (isData && ((HLT_EleHT350MET70 || HLT_Ele105) || (HLT_MuHT350MET70 || HLT_Mu50)))
+
