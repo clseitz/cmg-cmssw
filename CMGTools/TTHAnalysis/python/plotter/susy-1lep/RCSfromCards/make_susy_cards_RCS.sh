@@ -11,12 +11,14 @@ elif [[ "$HOSTNAME" == *"lxplus"* ]] ; then
     J=4;
 elif [[ "$1" == "DESYV3" ]] ; then
     shift # shift register
-    T="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Phys14_v3/ForCMGplot";
-    FT="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Phys14_v3/Phys14_V3_Friend_CSVbtag"
+#    T="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Phys14_v3/ForCMGplot";
+#    FT="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Phys14_v3/Phys14_V3_Friend_CSVbtag"
+    T="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Spring15";
+    FT="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Spring15/Friends"
     J=8;
 elif [[ "$HOSTNAME" == *"naf"* ]] ; then
-    T="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Phys14_v3/ForCMGplot";
-    FT="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Phys14_v3/Phys14_V3_Friend_CSVbtag"
+    T="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Spring15";
+    FT="/nfs/dust/cms/group/susy-desy/Run2/MC/CMGtuples/Spring15/Friends"
     J=8;
 else
     echo "Didn't specify location!"
@@ -25,7 +27,7 @@ else
 fi
 
 LUMI=$2
-OUTDIR="RCS_SameHT_lumi$2"
+OUTDIR="ABCD_test$2"
 OPTIONS=" -P $T -j $J -l $LUMI -f --s2v --tree treeProducerSusySingleLepton --od $OUTDIR  --asimov"
 
 # Get current plotter dir
@@ -39,7 +41,7 @@ OPTIONS=" $OPTIONS -F sf/t $FT/evVarFriend_{cname}.root "
 function makeCard_1l {
     local EXPR=$1; local BINS=$2; local SYSTS=$3; local OUT=$4; local GO=$5
 
-    CutFlowCard="1l_CardsFullCutFlow.txt"
+    CutFlowCard="1l_cuts.txt"
 
     # b-jet cuts
     case $nB in
@@ -51,29 +53,29 @@ function makeCard_1l {
         3B)  GO="${GO} -R 1nB 3nBp nBJetMedium30>=3 " ;;
     esac;
     #define signal and control regions according to variable dphi cut
-    case $ST in
-        ST0SR)  GO="${GO} -R st200 st200250 ST>200&&ST<250 " ;;
-        ST1SR)  GO="${GO} -R st200 st250350 ST>250&&ST<350 -R dp1 dp1 fabs(DeltaPhiLepW)>1" ;;
-        ST2SR)  GO="${GO} -R st200 st350450 ST>350&&ST<450 -R dp1 dp75 fabs(DeltaPhiLepW)>0.75" ;;
-        ST3SR)  GO="${GO} -R st200 st450600 ST>450&&ST<600 -R dp1 dp75 fabs(DeltaPhiLepW)>0.75" ;;
-        ST4SR)  GO="${GO} -R st200 st600Inf ST>600 -R dp1 dp05 fabs(DeltaPhiLepW)>0.5" ;;
-        ST34SR)  GO="${GO} -R st200 st450600 ST>450 -R dp1 dp75 fabs(DeltaPhiLepW)>0.75" ;;
+    case $LT in
+        LT0SR)  GO="${GO} -R st200 st200250 LTNoHF>200&&LTNoHF<250 " ;;
+        LT1SR)  GO="${GO} -R st200 st250350 LTNoHF>250&&LTNoHF<350 -R dp1 dp1 dPhiNoHF>1" ;;
+        LT2SR)  GO="${GO} -R st200 st350450 LTNoHF>350&&LTNoHF<450 -R dp1 dp75 dPhiNoHF>0.75" ;;
+        LT3SR)  GO="${GO} -R st200 st450600 LTNoHF>450&&LTNoHF<600 -R dp1 dp75 dPhiNoHF>0.75" ;;
+        LT4SR)  GO="${GO} -R st200 st600Inf LTNoHF>600 -R dp1 dp05 dPhiNoHF>0.5" ;;
+        LT34SR)  GO="${GO} -R st200 st450600 LTNoHF>450 -R dp1 dp75 dPhiNoHF>0.75" ;;
 
-        ST1CR)  GO="${GO} -R st200 st250350 ST>250&&ST<350 -R dp1 dp1CR fabs(DeltaPhiLepW)<1" ;;
-        ST2CR)  GO="${GO} -R st200 st350450 ST>350&&ST<450 -R dp1 dp75CR fabs(DeltaPhiLepW)<0.75" ;;
-        ST3CR)  GO="${GO} -R st200 st450600 ST>450&&ST<600 -R dp1 dp75CR fabs(DeltaPhiLepW)<0.75" ;;
-        ST4CR)  GO="${GO} -R st200 st600Inf ST>600 -R dp1 dp05CR fabs(DeltaPhiLepW)<0.5" ;;
-        ST34CR)  GO="${GO} -R st200 st450600 ST>450 -R dp1 dp75 fabs(DeltaPhiLepW)<0.75" ;;
+        LT1CR)  GO="${GO} -R st200 st250350 LTNoHF>250&&LTNoHF<350 -R dp1 dp1CR dPhiNoHF<1" ;;
+        LT2CR)  GO="${GO} -R st200 st350450 LTNoHF>350&&LTNoHF<450 -R dp1 dp75CR dPhiNoHF<0.75" ;;
+        LT3CR)  GO="${GO} -R st200 st450600 LTNoHF>450&&LTNoHF<600 -R dp1 dp75CR dPhiNoHF<0.75" ;;
+        LT4CR)  GO="${GO} -R st200 st600Inf LTNoHF>600 -R dp1 dp05CR dPhiNoHF<0.5" ;;
+        LT34CR)  GO="${GO} -R st200 st450600 LTNoHF>450 -R dp1 dp75CR dPhiNoHF<0.75" ;;
 
 
     esac;
 
     # jet multiplicities
     case $nJ in
-        45j)  GO="${GO} -R geq6j 45j nCentralJet30>=4&&nCentralJet30<=5"  ;;
-        68j)  GO="${GO} -R geq6j 67j nCentralJet30>=6&&nCentralJet30<=8"  ;;
-        6Infj)  GO="${GO} -R geq6j geq6j nCentralJet30>=6"  ;;
-        9Infj)  GO="${GO} -R geq6j geq8j nCentralJet30>=9"  ;;
+        45j)  GO="${GO} -R geq6j 45j nJet>=4&&nJet<=5"  ;;
+        68j)  GO="${GO} -R geq6j 67j nJet>=6&&nJet<=8"  ;;
+        6Infj)  GO="${GO} -R geq6j geq6j nJet>=6"  ;;
+        9Infj)  GO="${GO} -R geq6j geq8j nJet>=9"  ;;
     esac;
 
     # HT categories and combined bins
@@ -91,10 +93,11 @@ function makeCard_1l {
     esac;
 
     if [[ "$PRETEND" == "1" ]]; then
-        echo "making datacard $OUT from makeShapeCardsSusy.py mca-Phys14_1l_RCS.txt $CutFlowCard \"$EXPR\" \"$BINS\" $SYSTS $GO --dummyYieldsForZeroBkg --ignoreEmptySignal;"
+        echo "making datacard $OUT from makeShapeCardsSusy.py mca-Spring15_1l_RCS.txt  $CutFlowCard \"$EXPR\" \"$BINS\" $SYSTS -o $OUT $GO --dummyYieldsForZeroBkg --ignoreEmptySignal;"
     else
-        echo "making datacard $OUT from makeShapeCardsSusy.py mca-Phys14_1l_RCS.txt $CutFlowCard \"$EXPR\" \"$BINS\" $SYSTS $GO --dummyYieldsForZeroBkg --ignoreEmptySignal;"
-        python $PLOTDIR/makeShapeCardsSusy.py mca-Phys14_1l_RCS.txt $PLOTDIR/susy-1lep/$CutFlowCard "$EXPR" "$BINS" $SYSTS -o $OUT $GO --dummyYieldsForZeroBkg --ignoreEmptySignal;
+        echo "making datacard $OUT from makeShapeCardsSusy.py mca-Spring15_1l_RCS.txt $CutFlowCard \"$EXPR\" \"$BINS\" $SYSTS -o $OUT $GO --dummyYieldsForZeroBkg --ignoreEmptySignal;"
+        echo "python $PLOTDIR/makeShapeCardsSusy.py mca-Spring15_1l_RCS.txt $PLOTDIR/susy-1lep/RCSfromCards/$CutFlowCard \"$EXPR\" \"$BINS\" $SYSTS -o $OUT $GO --dummyYieldsForZeroBkg;"
+     python $PLOTDIR/makeShapeCardsSusy.py mca-Spring15_1l_RCS.txt $CutFlowCard "$EXPR" "$BINS" $SYSTS -o $OUT $GO --dummyYieldsForZeroBkg;
         echo "  -- done at $(date)";
     fi;
 }
@@ -168,12 +171,12 @@ if [[ "$1" == "1l-makeCards" ]]; then
                 done; done; done; done
 
 #45jets for 9
-    for ST in ST1SR ST2SR ST1CR ST2CR; do for nJ in 45j; do for nB in 1B 2B; do for HT in HT01 HT2; do 
+    for ST in ST1SR ST2SR ST1CR ST2CR; do for nJ in 45j; do for nB in 1B 23B; do for HT in HT01 HT2; do 
         echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
         makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for9 "$OPTIONS";
                 done; done; done; done
 
-    for ST in ST1SR ST2SR ST1CR ST2CR; do for nJ in 45j; do for nB in 3B; do for HT in HT012; do 
+    for ST in ST1SR ST2SR ST1CR ST2CR; do for nJ in 45j; do for nB in 23B; do for HT in HT012; do 
         echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
         makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for9 "$OPTIONS";
                 done; done; done; done
