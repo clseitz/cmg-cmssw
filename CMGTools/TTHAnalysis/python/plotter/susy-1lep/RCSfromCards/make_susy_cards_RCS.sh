@@ -25,7 +25,7 @@ else
 fi
 
 LUMI=$2
-OUTDIR="RCS_Allcards_lumi$2"
+OUTDIR="RCS_SameHT_lumi$2"
 OPTIONS=" -P $T -j $J -l $LUMI -f --s2v --tree treeProducerSusySingleLepton --od $OUTDIR  --asimov"
 
 # Get current plotter dir
@@ -145,42 +145,43 @@ if [[ "$1" == "1l-makeCards" ]]; then
 
 
     echo "Making individual datacards"
-#45 jets, CR cards
-    for ST in ST1SR ST2SR ST3SR ST4SR ST1CR ST2CR ST3CR ST4CR; do for nJ in 45j; do for nB in 1B 2B 3B 123B 23B; do for HT in HT012 HT01a HT2a HT0 HT1 HT2; do 
+
+#45jets for 6
+    for ST in ST1SR ST1CR; do for nJ in 45j; do for nB in 1B 23B; do for HT in HT0 HT12; do 
         echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
-        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT} "$OPTIONS";
-
+        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for6 "$OPTIONS";
                 done; done; done; done
 
-    for ST in ST1SR ST2SR ST34SR ST3SR ST4SR ST1CR ST2CR ST34CR ST3CR ST4CR; do for nJ in 45j; do for nB in 1B 23B; do for HT in HT012 HT0 HT1 HT2 HT01 HT12; do 
-        echo " --- CnC2015X_${nB}_${ST}K_${nJ}_${HT} ---"
-        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}K_${nJ}_${HT} "$OPTIONS";
+    for ST in ST2SR ST2CR; do for nJ in 45j; do for nB in 1B; do for HT in HT0 HT1 HT2; do 
+        echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
+        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for6 "$OPTIONS";
                 done; done; done; done
 
-#make kappa factor regions 
-    for ST in ST1SR ST1CR; do for nJ in 68j ; do for nB in 123B; do for HT in HT0 HT12; do 
-        echo " --- CnC2015X_${nB}_${ST}K_${nJ}_${HT} ---"
-        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}K_${nJ}_${HT} "$OPTIONS";
-                done; done; done; done
-    for ST in ST2SR ST2CR; do for nJ in 68j ; do for nB in 123B; do for HT in HT0 HT1 HT2; do 
-        echo " --- CnC2015X_${nB}_${ST}K_${nJ}_${HT} ---"
-        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}K_${nJ}_${HT} "$OPTIONS";
-                done; done; done; done
-    for ST in ST3SR ST3CR ST4SR ST4CR; do for nJ in 68j ; do for nB in 123B; do for HT in HT01 HT2; do 
-        echo " --- CnC2015X_${nB}_${ST}K_${nJ}_${HT} ---"
-        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}K_${nJ}_${HT} "$OPTIONS";
+    for ST in ST2SR ST2CR; do for nJ in 45j; do for nB in 23B; do for HT in HT0 HT1 HT2; do 
+        echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
+        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for6 "$OPTIONS";
                 done; done; done; done
 
-    for ST in ST1SR ST1CR ST2SR ST2CR; do for nJ in 9Infj ; do for nB in 123B; do for HT in HT01 HT2; do 
-        echo " --- CnC2015X_${nB}_${ST}K_${nJ}_${HT} ---"
-        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}K_${nJ}_${HT} "$OPTIONS";
+    for ST in ST3SR ST3CR ST4SR ST4CR; do for nJ in 45j; do for nB in 1B 23B; do for HT in HT01 HT2; do 
+        echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
+        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for6 "$OPTIONS";
                 done; done; done; done
 
-    for ST in ST34SR ST34CR; do for nJ in 9Infj; do for nB in 123B; do for HT in HT012; do 
-        echo " --- CnC2015X_${nB}_${ST}K_${nJ}_${HT} ---"
-        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}K_${nJ}_${HT} "$OPTIONS";
+#45jets for 9
+    for ST in ST1SR ST2SR ST1CR ST2CR; do for nJ in 45j; do for nB in 1B 2B; do for HT in HT01 HT2; do 
+        echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
+        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for9 "$OPTIONS";
                 done; done; done; done
-#last one for 9 jets already done with all b combined
+
+    for ST in ST1SR ST2SR ST1CR ST2CR; do for nJ in 45j; do for nB in 3B; do for HT in HT012; do 
+        echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
+        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for9 "$OPTIONS";
+                done; done; done; done
+
+    for ST in ST34SR ST34CR; do for nJ in 45j; do for nB in 123B; do for HT in HT012; do 
+        echo " --- CnC2015X_${nB}_${ST}_${nJ}_${HT} ---"
+        makeCard_1l $CnC_expr $CnC_bins $SYSTS CnC2015X_${nB}_${ST}_${nJ}_${HT}_for9 "$OPTIONS";
+                done; done; done; done
 
 #6jets
     for ST in ST1SR ST1CR; do for nJ in 68j; do for nB in 1B 2B 3B; do for HT in HT0 HT12; do 
